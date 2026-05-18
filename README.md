@@ -97,7 +97,7 @@ Hermes:
 
 执行：
 
-REPO_URL="https://github.com/<owner>/presence-watch.git"
+REPO_URL="https://github.com/LU90210/presence-watch.git"
 INSTALL_DIR="$HOME/presence-watch"
 if [ -d "$INSTALL_DIR/.git" ]; then
   cd "$INSTALL_DIR" && git pull --ff-only
@@ -118,7 +118,7 @@ OpenClaw:
 
 执行：
 
-REPO_URL="https://github.com/<owner>/presence-watch.git"
+REPO_URL="https://github.com/LU90210/presence-watch.git"
 INSTALL_DIR="$HOME/presence-watch"
 if [ -d "$INSTALL_DIR/.git" ]; then
   cd "$INSTALL_DIR" && git pull --ff-only
