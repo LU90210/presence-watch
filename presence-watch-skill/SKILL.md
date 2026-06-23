@@ -9,6 +9,8 @@ metadata:
     related_skills: []
   openclaw:
     requires_toolsets: [terminal]
+  claude:
+    requires_toolsets: [terminal]
 ---
 
 # Presence Watch

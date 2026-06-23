@@ -49,6 +49,16 @@ To sleep only the display:
 
 ## Agent Skill Setup
 
+Install the bundled Claude Code skill:
+
+```sh
+./install-claude-skill.sh
+```
+
+It installs to `~/.claude/skills/presence-watch` (override with
+`CLAUDE_SKILLS_DIR=/path/to/skills`). Start a new Claude Code session afterward
+so it picks up the skill.
+
 Install the bundled Hermes skill:
 
 ```sh

@@ -9,6 +9,7 @@ struct Options {
     var alertFilePath: String?
     var onAlertCommand: String?
     var alarm = true
+    var alertInterval: TimeInterval = 3
 }
 
 func usage() {
@@ -46,6 +47,12 @@ func parseOptions() -> Options {
             options.onAlertCommand = command
         case "--silent":
             options.alarm = false
+        case "--alert-interval":
+            guard let value = args.next(), let seconds = TimeInterval(value) else {
+                usage()
+                exit(2)
+            }
+            options.alertInterval = seconds
         case "-h", "--help":
             usage()
             exit(0)
@@ -85,6 +92,7 @@ let eventNames: [CGEventType: String] = [
 final class MonitorState {
     var triggered = false
     var eventCount = 0
+    var lastAlertTime: Date?
 }
 
 let state = MonitorState()
@@ -180,11 +188,23 @@ let callback: CGEventTapCallBack = { proxy, type, event, refcon in
 
     appendLog(line)
 
+    let now = Date()
+    let shouldAlert: Bool
     if !state.triggered {
         state.triggered = true
+        shouldAlert = true
+    } else if let last = state.lastAlertTime,
+              now.timeIntervalSince(last) >= options.alertInterval {
+        shouldAlert = true
+    } else {
+        shouldAlert = false
+    }
+
+    if shouldAlert {
+        state.lastAlertTime = now
         writeAlertFile(line)
         runAlertHook(eventJSON: line)
-        print("\nInput detected at \(timestamp): \(name)")
+        print("\nInput detected at \(timestamp): \(name) (#\(state.eventCount))")
         print("Log: \(logURL.path)")
         alertOnce(eventName: name)
     } else {

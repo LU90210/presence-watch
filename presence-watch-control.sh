@@ -50,11 +50,13 @@ start_watch() {
       --log "$LOG_FILE" \
       --alert-file "$ALERT_FILE" \
       --on-alert "$hook_command" \
+      --silent \
       > "$OUT_FILE" 2> "$ERR_FILE" &
   else
     nohup /usr/bin/env swift ./presence-watch.swift \
       --log "$LOG_FILE" \
       --alert-file "$ALERT_FILE" \
+      --silent \
       > "$OUT_FILE" 2> "$ERR_FILE" &
   fi
 
